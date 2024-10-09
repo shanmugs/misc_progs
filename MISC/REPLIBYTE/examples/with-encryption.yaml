@@ -1,0 +1,21 @@
+encryption_key: this is a secret key
+source:
+  connection_uri: postgres://root:password@localhost:5432/root
+  transformers:
+    - database: public
+      table: employees
+      columns:
+        - name: fist_name
+          transformer_name: first-name
+        - name: last_name
+          transformer_name: random
+destination:
+  # it's different to the source
+  connection_uri: postgres://root:password@localhost:5453/root
+datastore:
+  aws:
+    bucket: replibyte-test
+    region: us-east-2
+    credentials:
+      access_key_id: $AWS_ACCESS_KEY_ID
+      secret_access_key: $AWS_SECRET_ACCESS_KEY

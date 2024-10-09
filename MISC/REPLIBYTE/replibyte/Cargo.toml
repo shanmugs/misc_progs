@@ -1,0 +1,55 @@
+[package]
+edition = "2021"
+version = "0.10.0"
+name = "replibyte"
+authors = ["Qovery Team", "Fab", "Benny", "Contributos"]
+
+# See more keys and their definitions at https://doc.rust-lang.org/cargo/reference/manifest.html
+
+[dependencies]
+dump-parser = { path = "../dump-parser" }
+subset = { path = "../subset" }
+rand = "0.8.5"
+anyhow = "1.0.56"
+serde_yaml = "0.8"
+serde_json = "1.0"
+aws-config = "0.9.0"
+aws-smithy-client = "0.39.0"
+aws-smithy-http = "0.39.0"
+aws-sdk-s3 = "0.9.0"
+aws-types = "0.9.0"
+tokio = { version = "1", features = ["full"] }
+rustls = "0.20.4"
+clap = { version = "3.1", features = ["derive"] }
+serde = { version = "1.0", features = ["derive"] }
+lazy_static = "1.4.0"
+fake = "2.4"
+log = "0.4"
+env_logger = "0.9"
+prettytable-rs = "0.8"
+timeago = "0.3"
+indicatif = "0.16"
+http = "0.2"
+flate2 = "1.0"
+bson = "2.2"
+aes-gcm = "0.9"
+which = "4.2.5"
+mongodb-schema-parser = { git = "https://github.com/mongodb-rust/mongodb-schema-parser.git", rev = "2d489307dd70b63b216a9968f7dec7c217108b32" }
+url = "2.2.2"
+tempfile = "3.3"
+ctrlc = "3.2.1"
+reqwest = { version = "0.11", features = ["blocking"] }
+chrono = {version = "0.4", features = ["serde"] }
+machine-uid = "0.2"
+percent-encoding = "2.1.0"
+
+# FIXME removed until the CI release pipeline is fixed
+#wasmer = { version = "2.2", optional = true }
+wasmer = { version = "2.2" }
+# FIXME same as above
+#wasmer-wasi = { version = "2.2", optional = true }
+wasmer-wasi = { version = "2.2" }
+
+# FIXME same as above
+#[features]
+#wasm = ["wasmer", "wasmer-wasi"]

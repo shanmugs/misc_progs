@@ -1,0 +1,23 @@
+
+.icon{
+    padding: 10px;
+}
+.icon-label{
+    padding: 10px;
+    margin: 5px;
+    font-family: 'Lucida Sans', 'Lucida Sans Regular', 'Lucida Grande', 'Lucida Sans Unicode', Geneva, Verdana, sans-serif;
+}
+
+
+.icon-color{
+    color:  rgb(32, 116, 32);;
+}
+.hover:hover{
+    color: white !important;
+}
+
+.text-font
+{
+    font-family: 'Lucida Sans', 'Lucida Sans Regular', 'Lucida Grande', 'Lucida Sans Unicode', Geneva, Verdana, sans-serif !important;
+}
+

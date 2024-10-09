@@ -1,0 +1,39 @@
+   .form{
+       padding: 10px !important;
+       margin-bottom: 50px !important;
+   }
+
+   .fa{
+       color: rgb(70, 70, 207) !important;
+   }
+   
+   .form-control{
+   border-bottom: 1px solid rgb(148, 147, 147) !important;
+   }
+   
+   .invalid-input{
+       color:red;
+       margin-left: 35px;
+   }
+
+   h4{
+    font-family: 'Lucida Sans';
+    font-weight: bold;
+    text-align: center;
+    text-decoration: rgb(31, 30, 30);
+    padding: 10px;
+    text-transform: uppercase;
+}
+.btn-primary
+{
+    background-color:  #007E33 !important ;
+    margin-top: 10px !important;
+    width: 50% !important;
+}
+
+input[type=password]:focus:not([readonly]) {
+    border-bottom: 1px solid rgb(6, 175, 6) !important;
+    box-shadow: 0 1px 0 0 rgb(6, 175, 6) !important; 
+}
+
+

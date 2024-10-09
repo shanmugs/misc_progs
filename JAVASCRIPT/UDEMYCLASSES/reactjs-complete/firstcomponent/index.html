@@ -1,0 +1,29 @@
+<html>
+  <head>
+    <title>My First Component</title>
+    <script src="https://fb.me/react-0.14.6.js"></script>
+    <script src="https://fb.me/react-dom-0.14.6.js"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/babel-core/5.8.34/browser.min.js"></script>
+  </head>
+  <body>
+    <div id="HelloMessage"></div>
+    <script type="text/babel">
+      var HelloMessage = React.createClass({
+        sayMessage: function() {
+          alert("Bam!");
+        },
+        render: function() {
+          return <div>
+              <h3>Hello {this.props.word}!</h3>
+              <p>{this.props.children}</p>
+              <p><a href="#" onClick={this.sayMessage}>Click</a></p>
+            </div>;
+        }
+      });
+      ReactDOM.render(
+        <HelloMessage word="Everyone">Some Text</HelloMessage>,
+        document.getElementById("HelloMessage")
+      );
+    </script>
+  </body>
+</html>

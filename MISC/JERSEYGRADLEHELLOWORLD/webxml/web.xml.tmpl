@@ -1,0 +1,15 @@
+<?xml version="1.0" encoding="ISO-8859-1" ?>
+<web-app>
+     <servlet>
+       <servlet-name>[SERVLET_NAME]</servlet-name>
+       <servlet-class>com.sun.jersey.spi.container.servlet.ServletContainer</servlet-class>
+       <init-param>
+           <param-name>com.sun.jersey.config.property.packages</param-name>
+           <param-value>[JERSEY_PACKAGES]</param-value>
+       </init-param>
+     </servlet>
+     <servlet-mapping>
+       <servlet-name>[SERVLET_NAME]</servlet-name>
+       <url-pattern>[URL_PATTERN]</url-pattern>
+     </servlet-mapping>
+</web-app>

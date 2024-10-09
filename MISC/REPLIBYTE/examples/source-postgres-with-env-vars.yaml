@@ -1,0 +1,15 @@
+source:
+  connection_uri: $DATABASE_URL
+  transformers:
+    - database: public
+      table: employees
+      columns:
+        - name: last_name
+          transformer_name: random
+datastore:
+  aws:
+    bucket: $BUCKET_NAME
+    region: us-east-2
+    credentials:
+      access_key_id: $AWS_ACCESS_KEY_ID
+      secret_access_key: $AWS_SECRET_ACCESS_KEY

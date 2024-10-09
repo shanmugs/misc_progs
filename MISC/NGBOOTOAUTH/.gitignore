@@ -1,0 +1,34 @@
+logs/
+authserver/logs/
+ui-implicit/logs/
+ui-implicit/dist/
+ui-implicit/node_modules/
+ui-implicit/src/main/resources/static/
+/authserver/out/
+/authserver/logs/
+/authserver/build/
+ui-implicit/out/
+ui/out/
+
+### STS ###
+.classpath
+.factorypath
+.project
+.settings
+.springBeans
+
+### IntelliJ IDEA ###
+.idea
+.gradle
+build/
+authserver/build/
+ui/build/
+ui-implicit/build/
+
+### NetBeans ###
+nbproject/private/
+nbbuild/
+dist/
+nbdist/
+.nb-gradle/
+

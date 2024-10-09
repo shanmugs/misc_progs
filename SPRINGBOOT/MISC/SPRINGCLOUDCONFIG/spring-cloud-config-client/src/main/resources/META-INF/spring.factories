@@ -1,0 +1,15 @@
+# Auto Configure
+org.springframework.boot.autoconfigure.EnableAutoConfiguration=\
+org.springframework.cloud.config.client.ConfigClientAutoConfiguration
+# Bootstrap components
+org.springframework.cloud.bootstrap.BootstrapConfiguration=\
+org.springframework.cloud.config.client.ConfigServiceBootstrapConfiguration,\
+org.springframework.cloud.config.client.DiscoveryClientConfigServiceBootstrapConfiguration
+
+# ConfigData Location Resolvers
+org.springframework.boot.context.config.ConfigDataLocationResolver=\
+org.springframework.cloud.config.client.ConfigServerConfigDataLocationResolver
+
+# ConfigData Loaders
+org.springframework.boot.context.config.ConfigDataLoader=\
+org.springframework.cloud.config.client.ConfigServerConfigDataLoader

@@ -1,0 +1,25 @@
+# General
+*~
+target/
+*.class
+*.log
+
+#Gradle
+.gradle/
+build/
+reports/
+
+# IntelliJ
+.idea/
+*.iml
+*.iws
+out/
+
+# Eclipse
+.settings/
+.classpath
+.project
+
+# MacOS
+*.DS_Store
+

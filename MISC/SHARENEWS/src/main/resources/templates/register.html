@@ -1,0 +1,54 @@
+<!DOCTYPE html>
+<html lang="en" xmlns:th="http://www.thymleaf.org">
+<head>
+    <meta charset="UTF-8" >
+    <title>Title</title>
+    <link rel="stylesheet"  th:href="@{/styles/register.css}"  />
+    <link rel="stylesheet"  th:href="@{/styles/common.css}"  />
+    <link rel="stylesheet"  th:href="@{/styles/navbar.css}"  />
+    <script defer src="/js/navbar.js"></script>
+</head>
+<body>
+
+<div id="RegisterPage">
+
+    <div th:replace="fragments/NavBar"></div>
+
+    <main class="Main">
+        <div class="ImageDiv"></div>
+
+        <div class="FormDiv">
+
+            <form  th:action="@{/register}" th:object="${User}" method="post" >
+
+                <p th:if="${RegistrationError}" class="TextDanger" th:text="${RegistrationError}"></p>
+
+                <label for="firstName">First Name</label>
+                <input type="text" name="firstName" id="firstName" required>
+
+                <label for="lastName">Last Name</label>
+                <input type="text" name="lastName" id="lastName" required>
+
+                <label for="email">Email</label>
+                <input type="email" name="email" id="email" required>
+
+                <label for="password">Password</label>
+                <input type="password" name="password" id="password" required >
+
+                <button type="submit">SignUp</button>
+
+                <label >Have  an account?
+
+                    <a  th:href="@{/login}">
+                        <span style="color: #010066; font-weight: bold;" >Login</span>
+                    </a>
+                </label>
+            </form>
+
+        </div>
+    </main>
+
+</div>
+
+</body>
+</html>

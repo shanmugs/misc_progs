@@ -1,0 +1,90 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org">
+<head lang="en">
+
+    <title>Main page staff</title>
+
+    <!--/*/ <th:block th:include="fragments/headerinc :: head"></th:block> /*/-->
+</head>
+<body>
+<div class="container">
+
+
+    <!--/*/ <th:block th:include="fragments/header :: header"></th:block> /*/-->
+    
+         <h1> Staff Page</h1>
+    
+    <div th:if="${not #lists.isEmpty(customerList)}">
+        <h2>Customer List</h2>
+        <table class="table table-striped">
+            <tr>
+            	<th>Id</th>
+                <th>Name</th>
+                <th>Address</th>
+                <th>Email</th>
+                <th>Phone</th>
+                <th>Edit</th>
+                <th>Delete</th>
+            </tr>
+            <tr th:each="customer : ${customerList}">
+                <td th:text="${customer.id}"><a href="/customer/${customer.id}">Id</a></td>
+                <td th:text="${customer.name}">name</td>
+                <td th:text="${customer.address}">address</td>
+                <td th:text="${customer.email}">email</td>
+                <td th:text="${customer.phone}">phone</td>
+                
+                
+                
+                <td><a th:href="${'/customer/edit/' + customer.id}">Edit</a></td>
+                <td><a th:href="${'/customer/delete/' + customer.id}">Delete</a></td>
+                
+                
+            </tr>
+        </table>
+
+    </div>
+    
+     <div class="parent-div">
+ 	<a th:href="${'/customer/new/'}">Create Customer</a>
+
+    
+    
+    <div th:if="${not #lists.isEmpty(purchaseOrderList)}">
+        <h2>Purchase Order List</h2>
+        <table class="table table-striped">
+            <tr>
+            	<th>Id</th>
+                <th>customerName</th>
+                <th>itemName</th>
+                <th>quantity</th>
+                <th>Edit</th>
+                <th>Delete</th>
+            </tr>
+            <tr th:each="purchaseOrder : ${purchaseOrderList}">
+                <td th:text="${purchaseOrder.id}"><a href="/purchaseOrder/${purchaseOrder.id}">Id</a></td>
+                <td th:text="${purchaseOrder.customerName}">customerName</td>
+                <td th:text="${purchaseOrder.itemName}">itemName</td>
+                <td th:text="${purchaseOrder.quantity}">quantity</td>                
+                <td><a th:href="${'/purchaseOrder/edit/' + purchaseOrder.id}">Edit</a></td>
+                <td><a th:href="${'/purchaseOrder/delete/' + purchaseOrder.id}">Delete</a></td>
+            </tr>
+        </table>
+        
+        
+
+    </div>  
+    
+    <div class="parent-div">
+ 	<a th:href="${'/purchaseOrder/new/'}">Create Purchase Order</a>
+</div>
+
+<div class="parent-div">
+<li sec:authorize="isAuthenticated()"><a th:href="@{/logout}">Logout</a></li></div>
+        
+    
+    
+    
+</div>
+
+</body>
+</html>

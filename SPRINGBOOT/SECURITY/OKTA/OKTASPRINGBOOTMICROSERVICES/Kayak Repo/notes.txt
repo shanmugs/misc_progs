@@ -1,0 +1,93 @@
+start minikube:
+
+andrew-mpb:~ cantgetnosleep$ minikube start --memory=8192 --cpus=4
+Starting local Kubernetes v1.13.2 cluster...
+Starting VM...
+Getting VM IP address...
+Moving files into cluster...
+Setting up certs...
+Connecting to cluster...
+Setting up kubeconfig...
+Stopping extra container runtimes...
+Starting cluster components...
+Verifying kubelet health ...
+Verifying apiserver health ...
+Kubectl is now configured to use the cluster.
+Loading cached images from config file.
+Everything looks great. Please enjoy minikube!
+
+
+
+
+Check minikube status:
+
+andrew-mpb:~ cantgetnosleep$ minikube status
+host: Running
+kubelet: Running
+apiserver: Running
+kubectl: Correctly Configured: pointing to minikube-vm at 192.168.99.100
+
+
+
+Install istio components: (https://dzone.com/articles/service-mesh-with-istio-on-kubernetes-in-5-steps)
+
+andrew-mpb:~ cantgetnosleep$ kubectl apply -f ~/istio-1.0.5/install/kubernetes/istio-demo.yaml
+*** May have to run twice if you get a bunch of "unable to recognize"
+
+Check status if istio: kubectl get svc -n istio-system
+
+
+expose minikube docker
+- eval $(minikube docker-env)
+- https://kubernetes.io/docs/setup/minikube/#minikube-features
+
+
+docker pull mongo
+
+kubectl apply -f deployment-mongo.yml
+
+
+gradle bootJar
+
+** -- DONT FORGET -- **
+docker build -t kayak-app:1.0 .
+
+docker run --name=kayak-repo -p 8090:8090/tcp kayakservice:1.0
+
+List all:
+docker container ls -a
+docker conatiner stop <container ID>
+docker container rm <container ID>
+
+create deployment.yml
+istio-fy it: istioctl kube-inject -f deployment.yml > deployment-istio.yml
+
+
+kubectl apply -f deployment-istio.yml
+
+kubectl apply -f <(istioctl kube-inject -f deployment-istio.yml)
+
+
+kubectl -n istio-system get configmap istio-sidecar-injector -o=jsonpath='{.data.config}' > inject-config.yaml
+kubectl -n istio-system get configmap istio -o=jsonpath='{.data.mesh}' > mesh-config.yaml
+
+istioctl kube-inject \
+    --injectConfigFile inject-config.yaml \
+    --meshConfigFile mesh-config.yaml \
+    --filename deployment.yml \
+    --output deployment-injected.yml;
+
+kubectl apply -f deployment-injected.yml
+
+
+kubectl get deployment kayak-deployment
+kubectl get service kayak-service
+
+kubectl delete pod  --all
+
+kubectl get events
+
+kubectl logs kayak-deployment-5588586496-4jflz kayak-app
+
+
+ kubectl get po --all-namespaces

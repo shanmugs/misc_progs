@@ -1,0 +1,15 @@
+<?xml version="1.0" encoding="ISO-8859-1" ?>
+<web-app>
+     <servlet>
+       <servlet-name>Jersey Test App</servlet-name>
+       <servlet-class>com.sun.jersey.spi.container.servlet.ServletContainer</servlet-class>
+       <init-param>
+           <param-name>com.sun.jersey.config.property.packages</param-name>
+           <param-value>com.moksamedia.jerseytest</param-value>
+       </init-param>
+     </servlet>
+     <servlet-mapping>
+       <servlet-name>Jersey Test App</servlet-name>
+       <url-pattern>/*</url-pattern>
+     </servlet-mapping>
+</web-app>

@@ -1,0 +1,195 @@
+<!--container-->
+<div class="container" style="margin-top:90px; margin-bottom: 410px;">
+   
+    <!--row-->
+    <div class="row ">
+        <div class="col-md z-depth-1-half" style="margin: 10px;">
+            <h4 class="text-center" style="padding: 10px;"><b>Check Out</b></h4>
+        </div>
+    </div>
+    <!--row-->
+    <div class="row">
+
+        <!--column-->
+        <div class="col-md" style="margin: 5px;">
+            <mdb-card>
+                <mdb-card-body> 
+
+                    <mdb-card-title>
+                        <h5><b>Items picked : <small class="text-success">{{paidMessage}}</small></b></h5>
+                    </mdb-card-title>
+                    
+                    <small 
+                    *ngIf="cart ===null || cart == '' " 
+                    class="text-danger"
+                    (click)="goBackToShopping()"
+                    >
+                      No items : Click here to get some
+                   </small>
+                    
+                   <!--picked items-->
+                    <ul *ngFor="let item of cart" class="list-group list-group-flush">
+          
+                        <li class="list-group-item">
+                            
+                            <mdb-icon far icon="dot-circle mr-2"></mdb-icon>
+
+                            {{item.name}} : {{item.price}}
+
+                            <mdb-icon 
+                             fas icon="trash-alt"
+                             class="red-text ml-1"
+                             (click)="removeFromCart(item)"
+                             >
+                            </mdb-icon>
+                        </li>
+                    </ul>
+                    <!--picked items-->
+
+                </mdb-card-body>
+            </mdb-card>
+        </div>
+        <!--column-->
+
+
+         <!--column-->
+         <div class="col-md" style="margin: 5px;" >
+             <mdb-card>
+                 <mdb-card-body>
+                        <!--form -->
+                    <form class="text-center" #f = "ngForm" (ngSubmit)="f.valid && pay()" method="POST">
+
+                            <p class="h4 mb-4">Pay</p>
+                            
+                            <!-- Card Number -->
+                            <div class="md-form form-sm">
+                            <label for="card-number">Card Number</label>
+                            <input 
+                              type="text"
+                              id="card-number" 
+                              mdbInput 
+                              class="form-control form-control-sm" 
+                              name="creditCardNumber"
+                              [(ngModel)]="creditCard.cardNumber"
+                              #cardNumber ="ngModel"
+                              [ngClass]="{ 'is-invalid': f.submitted && cardNumber.invalid}"
+                              required
+                              pattern="([0-9]{16})"
+                              >
+                              <div *ngIf="f.submitted || cardNumber.invalid && (cardNumber.dirty || cardNumber.touched)" class="invalid-input">
+                                    <small *ngIf="cardNumber.errors?.required">Field is required</small>
+                                    <small *ngIf="cardNumber.errors?.pattern">Invalid</small>
+                               </div>
+                            </div>
+                              
+
+                            <!-- expiry month -->
+                            <div class="md-form form-sm">
+                            <label for="exp_month">Expiry Month</label>
+                            <input 
+                               type="text" 
+                               id="exp_month" 
+                               mdbInput class="form-control form-control-sm"  
+                               required
+                               pattern="(0[1-9]|1[0-2])"
+                               name="expiryMonth"
+                               [(ngModel)]="creditCard.expiryMonth"
+                               #month = "ngModel"
+                               [ngClass]= "{ 'is-invalid': f.submitted && month.invalid}"
+                               >
+                               <div *ngIf="f.submitted || month.invalid && (month.dirty || month.touched)" class="invalid-input">
+                                    <small *ngIf="month.errors?.required">Field is required</small>
+                                    <small *ngIf="month.errors?.pattern">Invalid month. Use e.g 01 - 12</small>
+                               </div>
+                            </div>
+                            
+
+                            <!-- expiry year -->
+                            <div class="md-form form-sm">
+                            <label for="exp_yr">Expiry Year</label>
+                            <input 
+                               type="text" 
+                               id="exp_yr" 
+                               mdbInput 
+                               class="form-control form-control-sm" 
+                               required
+                               checkExpiryYear
+                               name="expiryYear"
+                               pattern="(20([1-9]{2}))"
+                               [(ngModel)]="creditCard.expiryYear"
+                               #year = "ngModel"
+                               [ngClass]= "{ 'is-invalid': f.submitted && year.invalid}"
+
+                               >
+                               <div *ngIf="f.submitted || year.invalid && (year.dirty || year.touched)" class="invalid-input">
+                                    <small *ngIf="year.errors?.required">Field is required</small>
+                                    <small *ngIf="year.errors?.pattern">Invalid year. Use e.g 2011 - 2099 </small>
+                               </div>
+                               
+                            </div>
+                            
+
+                            <!-- cvc -->
+                            <div class="md-form form-sm">
+                            <label for="cvc">CVC</label>
+                            <input 
+                              type="text" 
+                              id="cvc" 
+                              mdbInput 
+                              class="form-control form-control-sm"  
+                              required
+                              pattern="[0-9]{3,4}"
+                              name="cvc"
+                              [(ngModel)]="creditCard.cvc"
+                              #cvc = "ngModel"
+                              [ngClass]= "{ 'is-invalid': f.submitted && cvc.invalid}"
+                               >
+                              <div *ngIf="f.submitted || cvc.invalid && (cvc.dirty || cvc.touched)" class="invalid-input">
+                                    <small *ngIf="cvc.errors?.required">Field is required</small>
+                                    <small *ngIf="cvc.errors?.pattern">Invalid CVC</small>
+                              </div>
+                        </div>
+                            
+                            <!-- pay button -->
+                            <button
+                             type="submit" 
+                             name="submit"
+                             mdbBtn 
+                             block="true" 
+                             class="pay-button my-4"
+                            >
+
+                            <mdb-icon far icon="credit-card"></mdb-icon>
+
+                                Pay: ${{totalPrice}}
+                            </button>
+                            <!-- pay button -->
+
+                            <!-- Loader/spinner-->
+                            <div *ngIf="spinnerShown" class="spinner-border text-success" role="status">
+                                <span class="sr-only">Loading...</span>
+                            </div>
+
+                            <!-- error message -->
+                            <div class="text-danger">
+                                <small *ngIf="errorMessage"><b>{{errorMessage}}</b></small>
+                            </div>
+
+                            <!-- success message -->
+                            <div  class="text-success">
+                                <small *ngIf="successMessage"><b>{{successMessage}}</b></small>
+                                <small *ngIf="successMessage"><b> We shall call you shortly</b></small>
+                            </div>
+                        </form>
+                        <!-- Default form login -->
+                        <!--form -->
+                 </mdb-card-body>
+             </mdb-card>
+        </div>
+        <!--column-->
+
+    </div>
+    <!--row-->
+
+</div>
+<!--container-->

@@ -1,0 +1,92 @@
+START MINIKUBE
+
+andrew-mpb:~ cantgetnosleep$ minikube start --memory=8192 --cpus=4
+Starting local Kubernetes v1.13.2 cluster...
+Starting VM...
+Getting VM IP address...
+Moving files into cluster...
+Setting up certs...
+Connecting to cluster...
+Setting up kubeconfig...
+Stopping extra container runtimes...
+Starting cluster components...
+Verifying kubelet health ...
+Verifying apiserver health ...
+Kubectl is now configured to use the cluster.
+Loading cached images from config file.
+Everything looks great. Please enjoy minikube!
+
+
+
+CHECK MINIKUBE STATUS
+
+andrew-mpb:~ cantgetnosleep$ minikube status
+host: Running
+kubelet: Running
+apiserver: Running
+kubectl: Correctly Configured: pointing to minikube-vm at 192.168.99.100
+
+
+
+INSTALL ISTIO IN MINIKUBE
+
+Install istio components: (https://dzone.com/articles/service-mesh-with-istio-on-kubernetes-in-5-steps)
+
+andrew-mpb:~ cantgetnosleep$ kubectl apply -f ~/istio-1.0.5/install/kubernetes/istio-demo.yaml
+*** May have to run twice if you get a bunch of "unable to recognize"
+
+Check status if istio: kubectl get svc -n istio-system
+
+
+
+EXPOSE MINIKUBE DOCKER
+
+- eval $(minikube docker-env)
+- https://kubernetes.io/docs/setup/minikube/#minikube-features
+
+
+
+PULL AND DEPLOY MONGO (is pull necessary?)
+
+docker pull mongo
+
+kubectl apply -f deployment-mongo.yml
+
+** WAIT FOR MONGO TO FINISH **
+
+
+BUILD SPRING BOOT APP AND DOCKER IMAGE
+
+gradle bootJar
+
+docker build -t kayak-app:1.0 .
+
+
+
+INJECT AND DEPLOY ISTIO-FIED DOCKER KUBERNETES
+
+kubectl -n istio-system get configmap istio-sidecar-injector -o=jsonpath='{.data.config}' > inject-config.yml
+kubectl -n istio-system get configmap istio -o=jsonpath='{.data.mesh}' > mesh-config.yml
+
+istioctl kube-inject \
+    --injectConfigFile inject-config.yml \
+    --meshConfigFile mesh-config.yml \
+    --filename deployment.yml \
+    --output deployment-injected.yml;
+
+kubectl apply -f deployment-injected.yml
+
+
+
+DEPLOY ISTIO GATEWAY
+
+kubectl apply -f istio-gateway.yml
+
+
+
+TEST!!!!
+
+export INGRESS_PORT=$(kubectl -n istio-system get service istio-ingressgateway -o jsonpath='{.spec.ports[?(@.name=="http2")].nodePort}')
+export INGRESS_HOST=$(minikube ip)
+http $INGRESS_HOST:$INGRESS_PORT
+http $INGRESS_HOST:$INGRESS_PORT/kayaks

@@ -1,0 +1,21 @@
+okta:
+  oauth2:
+    client-secret: NHOilIaQPsgz5uOotjwm7p4v6MtHVTFyTT90wQ6p
+    client-id: 0oa30gk10KNOMD0wZ4x6
+    issuer: https://dev-447850.okta.com/oauth2/default
+spring:
+  cloud:
+    stream:
+      function:
+        definition: accumulate;receive;send;receiveSse
+      bindings:
+        send-out-0:
+          destination: ints
+        receiveSse-in-0:
+          destination: total
+        receive-in-0:
+          destination: total
+        accumulate-in-0:
+          destination: ints
+        accumulate-out-0:
+          destination: total

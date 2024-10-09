@@ -1,0 +1,68 @@
+<!DOCTYPE html>
+<html lang="en" xmlns:th="http://www.thymleaf.org"
+      xmlns:sec="http://www.thymeleaf.org/extras/spring-security">
+<head>
+    <meta charset="UTF-8">
+    <title>Posts</title>
+    <link rel="stylesheet"  th:href="@{/styles/post.css}"  />
+    <link rel="stylesheet"  th:href="@{/styles/common.css}"  />
+    <link rel="stylesheet"  th:href="@{/styles/navbar.css}"  />
+    <link rel="stylesheet"  th:href="@{/styles/navbar.css}"  />
+    <link rel="stylesheet" th:href="@{/styles/font-awesome/css/font-awesome.min.css}">
+
+
+
+    <script defer src="/js/navbar.js"></script>
+    <script defer src="/js/post.js"></script>
+    <script defer src="/webjars/jquery/jquery.min.js"></script>
+    <script defer src="/webjars/sockjs-client/sockjs.min.js"></script>
+    <script defer src="/webjars/stomp-websocket/stomp.min.js"></script>
+
+</head>
+<body>
+
+
+<div id="PostsPage">
+
+    <div th:replace="fragments/NavBar"></div>
+
+    <div class="Main">
+
+        <section class="AddPostSection">
+
+            <form id="addPostForm" enctype="multipart/form-data" onsubmit="postFormHandler(event)">
+
+                <label class="TextDanger" th:if="${FailMessage}" th:text="${FailMessage}"></label>
+                <label class="TextSuccess" th:if="${SuccessMessage}" th:text="${SuccessMessage}"></label>
+                <label class="TextDanger"><b id="error" ></b></label>
+
+                <label for="description" ></label>
+                <textarea name="description" id="description" placeholder="Share an event" rows="3" cols="50" required></textarea>
+
+                <div class="PostSubSection">
+
+                    <button type="submit">Post</button>
+
+                    <label for="file" id="ImageUpload"><span class="fa fa-camera"></span></label>
+                    <input type="file" name="file" id="file" >
+
+                </div>
+
+            </form>
+
+        </section>
+
+       <section class="Posts">
+           
+
+       </section>
+
+
+    </div>
+
+</div>
+
+
+
+</body>
+</html>

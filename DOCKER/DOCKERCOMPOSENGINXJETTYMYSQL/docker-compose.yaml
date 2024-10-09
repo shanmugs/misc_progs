@@ -1,0 +1,38 @@
+version: '2'
+services:
+  nginx:
+   container_name: some-nginx
+   image: nginx
+   restart: always
+   ports:
+   - 80:80
+   - 443:443
+   volumes:
+   - ./nginx-site-enabled:/etc/nginx/sites-enabled
+   networks:
+   - front
+ 
+  jetty:
+   container_name: some-jetty
+   image: jetty
+   restart: always
+   networks:
+   - front
+   - back
+
+  mysql:
+   container_name: some-mysql
+   image: mysql/mysql-server
+   environment:
+    MYSQL_ROOT_PASSWORD: hellokoding
+   ports:
+   - "3306:3306"
+   volumes:
+   - /Users/giau/Documents/data/mysql:/var/lib/mysql
+   restart: always
+   networks:
+   - back
+
+networks:
+  front:
+  back:

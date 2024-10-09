@@ -1,0 +1,80 @@
+<!DOCTYPE html>
+<html lang="en" xmlns:th="http://www.thymleaf.org"
+      xmlns:sec="http://www.thymeleaf.org/extras/spring-security">
+<head>
+    <meta charset="UTF-8">
+    <title>Comments</title>
+    <link rel="stylesheet"  th:href="@{/styles/post.css}"  />
+    <link rel="stylesheet"  th:href="@{/styles/common.css}"  />
+    <link rel="stylesheet"  th:href="@{/styles/navbar.css}"  />
+    <link rel="stylesheet"  th:href="@{/styles/comments.css}"  />
+    <link rel="stylesheet" th:href="@{/styles/font-awesome/css/font-awesome.min.css}">
+
+    <script defer src="/js/navbar.js"></script>
+    <script defer src="/js/post.js"></script>
+    
+</head>
+<body>
+
+<div id="PostsPage">
+
+    <div th:replace="fragments/NavBar"></div>
+
+    <div class="Main" id="Main2">
+
+        <section class="Posts">
+
+            <div class="PostsContent" th:each="Post : ${PostViewModel}">
+
+                <div class="PostedBySection" >
+                    <div class="PostedByGraphic"><span class="Icon" th:text="${Post.icon}"></span></div>
+                    <h4 th:text="${Post.postByName}"></h4>
+                </div>
+
+                <img th:src="${Post.image}" alt="image">
+
+                <div class="PostedDescriptionSection">
+                    <p th:text="${Post.description}"></p>
+                </div>
+
+                <div class="PostCommentCount">
+                    <a th:href="@{'/post/' + ${Post.postId} + '/comments'} ">
+                        <p th:text="${Post.noOfComments + ' comments'}"></p>
+                    </a>
+
+                </div>
+
+                <div class="CommentsTitle" >
+                    <h4>Comments</h4>
+                </div>
+
+                <div class="ViewComments" th:each="Comment : ${Comments}">
+
+                    <div class="PostedBySection2" >
+                        <div class="PostedByGraphic2"><span class="Icon" th:text="${Comment.icon}"></span></div>
+                        <p  th:text="${Comment.commentedBy}"></p>
+                    </div>
+
+                    <div class="PostedDescriptionSection2">
+                        <p th:text="${Comment.text}" ></p>
+                        <a th:if="${Comment.canDelete}"
+                           th:href="@{'/post/' + ${Post.postId} } + '/comment/' + ${Comment.id}"
+                           onclick="HandleConfirm(event)"><span class="fa fa-trash"></span></a>
+                           
+                    </div>
+
+                </div>
+
+
+            </div>
+
+        </section>
+
+
+
+    </div>
+
+</div>
+
+</body>
+</html>

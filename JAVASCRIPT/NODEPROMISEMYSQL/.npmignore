@@ -1,0 +1,9 @@
+node_modules
+tap-snapshots
+test
+.travis.yml
+.DS_Store
+.vscode
+.nyc_output
+coverage
+examples

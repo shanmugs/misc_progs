@@ -1,0 +1,54 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org">
+<head lang="en">
+
+    <title>Main page customer</title>
+
+    <!--/*/ <th:block th:include="fragments/headerinc :: head"></th:block> /*/-->
+</head>
+<body>
+<div class="container">
+    <!--/*/ <th:block th:include="fragments/header :: header"></th:block> /*/-->
+    
+     <h1> Customer Page</h1>
+    <div th:if="${not #lists.isEmpty(purchaseOrderList)}">
+        <h2>Purchase Order List</h2>
+        <table class="table table-striped">
+            <tr>
+            	<th>Id</th>
+                <th>customerName</th>
+                <th>itemName</th>
+                <th>quantity</th>
+                <th>Edit</th>
+                <th>Delete</th>
+            </tr>
+            <tr th:each="purchaseOrder : ${purchaseOrderList}">
+                <td th:text="${purchaseOrder.id}"><a href="/purchaseOrder/${purchaseOrder.id}">Id</a></td>
+                <td th:text="${purchaseOrder.customerName}">customerName</td>
+                <td th:text="${purchaseOrder.itemName}">itemName</td>
+                <td th:text="${purchaseOrder.quantity}">quantity</td>                
+                <td><a th:href="${'/purchaseOrderCust/edit/' + purchaseOrder.id}">Edit</a></td>
+                <td><a th:href="${'/purchaseOrderCust/delete/' + purchaseOrder.id}">Delete</a></td>
+            </tr>
+        </table>
+        
+        
+
+    </div>
+    
+    <div class="parent-div">
+ 	<a th:href="${'/purchaseOrderNew/new/'}">Create Purchase Order</a>
+</div>
+
+<div class="parent-div">
+ 	<a th:href="${'/customer/changeUsernamePassword/'}">Change username/password</a>
+</div>
+    
+<div class="parent-div">
+<li sec:authorize="isAuthenticated()"><a th:href="@{/logout}">Logout</a></li></div>
+        
+    
+</div>
+
+</body>
+</html>

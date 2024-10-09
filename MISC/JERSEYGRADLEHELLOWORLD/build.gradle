@@ -1,0 +1,67 @@
+apply plugin: 'groovy'
+apply plugin: 'eclipse'
+apply plugin: 'jetty'
+
+import org.slf4j.Logger
+import org.slf4j.LoggerFactory
+
+Logger log = LoggerFactory.getLogger("build-logger")
+
+logging.captureStandardOutput LogLevel.INFO
+
+// PROJECT VERSION
+project.version = 0.1
+project.group = 'com.moksamedia.jerseytest'
+
+repositories {
+	mavenCentral()
+}
+	
+dependencies {
+	
+	/* JAX-RS (JSR 311) API */
+	compile 'javax.ws.rs:jsr311-api:1.1.1'
+	
+	compile 'com.sun.jersey:jersey-bundle:1.17'
+	
+	/* JUNIT */
+	testCompile 'junit:junit:4.10'
+	
+	/* LOGGING */
+	compile 'org.slf4j:slf4j-api:1.7.4',
+			'org.slf4j:slf4j-log4j12:1.7.4',
+			'log4j:log4j:1.2.17'		
+	
+	/* GROOVY */
+	groovy 'org.codehaus.groovy:groovy-all:1.8.+'
+	
+}
+
+project.ext.webxmlPackages = project.group
+project.ext.webxmlServletName = "Jersey Test App"
+project.ext.webxmlUrlPattern = "/*"
+
+task prepWebXml {
+	
+	war.dependsOn prepWebXml
+
+	File template = file('webxml/web.xml.tmpl')
+	File webXml   = file('webxml/web.xml')
+	
+	//inputs.file template
+	//outputs.file webXml
+	
+	doLast {
+		String text = template.text
+		text = text.replaceFirst(/\[JERSEY_PACKAGES\]/, project.ext.webxmlPackages)
+		text = text.replaceAll(/\[SERVLET_NAME\]/, project.ext.webxmlServletName)
+		text = text.replaceFirst(/\[URL_PATTERN\]/, project.ext.webxmlUrlPattern)
+		webXml.write(text)
+		log.info "web.xml updated with group info: ${project.group}"
+	}
+	
+}
+
+war {
+	webXml = file('webxml/web.xml')
+}
