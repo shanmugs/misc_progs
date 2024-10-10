@@ -1,0 +1,28 @@
+version: "3.9"
+services:
+  api:
+    build:
+      context: ./api
+    ports:
+      - 3000:3000
+    environment:
+      - DATABASE_HOST=db
+      - DATABASE_PORT=5432
+      - DATABASE_USERNAME=postgres
+      - DATABASE_PASSWORD=postgres
+      - DATABASE_NAME=todo_db
+    depends_on:
+      - db
+
+  db:
+    build:
+      context: ./db
+    environment:
+      - POSTGRES_DB=todo_db
+      - POSTGRES_USER=postgres
+      - POSTGRES_PASSWORD=postgres
+    volumes:
+      - db-data:/var/lib/postgresql/data
+
+volumes:
+  db-data:
