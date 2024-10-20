@@ -1,0 +1,34 @@
+https://dev.to/francescoxx/typescript-crud-rest-api-using-nestjs-typeorm-postgres-docker-and-docker-compose-33al
+
+https://www.youtube.com/live/gqFauCpPSlw
+https://github.com/FrancescoXX/nest-crud-live
+
+
+ # development
+$ npm run start
+
+# watch mode
+$ npm run start:dev
+
+# production mode
+$ npm run start:prod
+
+# Test 
+# unit tests
+$ npm run test
+
+# e2e tests
+$ npm run test:e2e
+
+# test coverage
+$ npm run test:cov
+
+
+docker compose up -d db
+
+docker ps -a
+
+docker compose build
+
+docker compose up 
+
